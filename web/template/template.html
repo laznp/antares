@@ -1,0 +1,36 @@
+<html>
+	<head>
+	<title>PT. Inzpire Technology</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+		<!-- NavBar -->
+		<ul id="slide-out" class="side-nav fixed">
+			<li>
+				<div class="userView">
+					<span class="white-text name">{{user}}</span>
+					<span class="white-text email">System Administrator</span>
+				</div>
+			</li>
+			<li><a class="waves-effect waves-light white-text" href="/server"><i class="material-icons white-text">storage</i>Server</a></li>
+			<li><a class="waves-effect waves-light white-text" href="/database"><i class="material-icons white-text">layers</i>Database</a></li>
+			<li><a class="waves-effect waves-light white-text" href="/app"><i class="material-icons white-text">cloud</i>Application</a></li>
+			<li><a class="waves-effect waves-light white-text" href="/domains"><i class="material-icons white-text">public</i>Domain</a></li>
+			<li><div class="divider"></div></li>
+			<li><a class="waves-effect waves-light white-text" href="/logout"><i class="material-icons white-text">close</i>Log Out</a></li>
+		</ul>
+		<!-- NavBar -->
+		<!-- Content -->
+		<div class="container">
+			{% block content%}
+			{% endblock %}
+		</div>
+		<!-- Content -->
+	</body>
+</html>

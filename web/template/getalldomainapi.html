@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<h1>Dapatkan Daftar Semua Domain</h1>
+    <form method="post" action="/getalldomain">
+        <p>access code: <input type="text" name="access_code"></p>
+    </form>
+    <p><input type="button" onclick="submitForm()" value="Submit"></p>
+<script>
+     function submitForm(){
+         var form = $('form');
+         var url = form.attr("action");
+         var formData = {};
+         $(form).find("input[name]").each(function (index, node) {
+             formData[node.name] = node.value;
+         });
+         $.post(url, formData).done(function (data) {
+             console.log(data);
+         });
+     }
+</script>
+</body>
+</html>

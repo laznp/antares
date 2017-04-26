@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+	<title>{{name_server}}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+	    table td, table td * {
+    vertical-align: top;
+}
+
+	</style>
+    </head>
+    <body>
+	<form action="" method="post">
+	    <table>
+		<tr>
+		    <td>
+			Nama PC 
+		    </td>
+		    <td>
+			 : 
+		    </td>
+		    <td>
+			 <input type='text' value="{{spekdata.name_pc}}" name='name_pc'>
+		    </td>
+		    
+		</tr>
+		<tr>
+		    <td>
+			Processor 
+		    </td>
+		    <td>
+			 : 
+		    </td>
+		    <td>
+			 <input type='text' value="{{spekdata.processor}}" name='processor'>
+		    </td>
+		</tr>
+		<tr>
+		    <td>
+			Ram 
+		    </td>
+		    <td>
+			 : 
+		    </td>
+		    <td>
+			 <input type='text' value="{{spekdata.ram}}" name='ram'>
+		    </td>
+		</tr>
+		<tr>
+		    <td>
+			Storage 
+		    </td>
+		    <td>
+			 : 
+		    </td>
+		    <td>
+			 <input type='text' value="{{spekdata.storage}}" name='storage'>
+		    </td>
+		</tr>
+		<tr>
+		    <td>
+			Dependency 
+		    </td>
+		    <td>
+			 : 
+		    </td>
+		    <td>
+			 <textarea style="height: 200px"  name='dependency'>{{spekdata.dependency}}</textarea>
+		    </td>
+		</tr>
+		<tr>
+		    <td>
+			
+		    </td>
+		    <td>
+			
+		    </td>
+		    
+		    <td>
+			<input type="submit" value="Submit"> {% if update is not none and update==True %}   
+    {{ 'success' }}
+{% elif update is not none and update==False %}
+   {{ 'failed' }}
+{%endif %}
+		    </td>
+		</tr>
+	    </table>
+	    
+	</form>
+    </body>
+</html>

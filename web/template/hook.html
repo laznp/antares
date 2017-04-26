@@ -1,0 +1,20 @@
+<html>
+	<head>
+	<title>PT. Inzpire Technology</title>
+	<link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	</head>
+	<body>
+		<center>
+			<img src="{{ url_for('static', filename='img/logo.png') }}">
+			<p id="message">
+				<span id="srv-name">- Antares Server -</span><br>
+				<br>
+				<br>
+				<span id="git-status">[+] {{ data.product }} on {{ data.server }} Server {{ data.status }} [+]</span>
+			</p>
+			<br>
+		</center>
+		<br>
+	</body>
+</html>

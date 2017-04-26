@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Antares</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- JQuery -->
+        <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+
+	<!--Compiled and minified CSS materialize-->
+	<link rel = "stylesheet" href = "{{url_for('static', filename='css/materialize.min.css')}}">
+
+	<!--Material Icons-->
+	<link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
+
+	<!--Compiled and minified Materialize-->
+	<script src = "{{url_for('static', filename='js/materialize.min.js')}}" ></script>
+
+	<!-- AngularJs -->
+	<script src="{{url_for('static', filename='js/angular.min.js')}}"></script>
+
+	<!--UI Bootstrap-->
+	<script src="{{url_for('static', filename='js/ui-bootstrap-tpls-1.0.3.js')}}"></script>
+
+	<style>
+/*	    header, main, footer {
+		padding-left: 300px;
+	    }*/
+
+	    @media only screen and (max-width : 992px) {
+		header, main, footer {
+		    padding-left: 0;
+		}
+		table.responsive-table thead tr th::before {
+		    content: "";
+		}
+	    }
+
+	    a:link,a:visited{
+		text-decoration: inherit;
+		color: inherit;
+		cursor: auto;
+	    }
+	    th a {
+		display: block;
+	    }
+	    .pagination li.active{
+		background-color: darkgray;
+	    }
+	    td {
+		white-space: nowrap;
+		/*word-wrap: break-word;*/
+
+	    }
+	    /*	    .modal input{
+			    width: 200px;
+			}*/
+	    .brand-logo{
+		left: 40%;
+	    }
+	    .material-icons.ired { color: #f44336; }
+	</style>
+
+    </head>
+    <body id="body"  ng-app="myApp" ng-controller="bodyCtrl">
+	<header>
+	    <ul id="slide-out" class="side-nav">
+		<li><div class="userView" style="text-align: -webkit-center;text-align:  -moz-center;">
+			<img class="background" src="{{ url_for('static', filename = 'img/backgroundantares.png')}}" alt="">
+			<!--<a href="#!user"><img class="circle" src="http://materializecss.com/images/yuna.jpg" alt=""></a>-->
+			<br><br><a href="#!name"><span class="white-text name">{a username a}</span></a>
+			<a href="#!email"><span class="white-text email">{a email a}</span></a>
+		    </div></li>
+		<li><a class="waves-effect" ng-click="savesearch(); sortType = 'alias'; panel = 'server'; retrivesearch(panel)" onclick="$('.button-collapse').sideNav('hide');" href="#!">
+			<i class="material-icons ">storage</i>
+			Server
+		    </a>
+		</li>
+		<li><a class="waves-effect" ng-click="savesearch(); sortType = 'app_name'; panel = 'application'; retrivesearch(panel)" onclick=" $('.button-collapse').sideNav('hide');" href="#!"><i class="material-icons">cloud</i>Application</a></li>
+		<li><a class="waves-effect" ng-click="savesearch(); sortType = 'db_name'; panel = 'database'; retrivesearch(panel)" onclick="$('.button-collapse').sideNav('hide');" href="#!"><i class="material-icons ">layers</i>Database</a></li>
+
+		<li><div class="divider"></div></li>
+		<li><a class="waves-effect" href="/logout1"><i class="material-icons ">close</i>Logout</a></li>
+	    </ul>
+
+
+	    <nav class="top-nav grey darken-1" style="position:fixed;top:0px;">
+		<div>
+		    <a href="#" data-activates="slide-out" class="left button-collapses top-nav full" style="margin-left:20px;margin-top:5px;">
+			    <i class="material-icons">menu</i>
+			</a>
+		    <div class="nav-wrapper">
+			
+			<span class="brand-logo" ng-init="panel = 'Antares'">{a panel a}</span>
+			<ul class="right hide-on-small-only">
+			    <li ng-hide="panel === 'Antares'" class="search-wrapper" style="display:inline-flex">
+				<input  ng-model="search">
+				<i ng-show="search === ''" class="material-icons">search</i>
+				<a ng-show="search !== ''" href="#!" ng-click="search = ''">
+				    <i  class="material-icons">close</i>
+				</a>
+			    </li>
+			    <!--li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+			    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+			    <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li-->
+			</ul>
+		    </div>
+		</div>
+	    </nav>
+	</header>
+	<main >
+	    <div class="card-panel"  ng-switch="panel" style="margin-top:64px;">
+		<div id="tablefix" style='overflow-y:hidden;overflow-x: auto; margin-bottom: 20px'>
+		    <div ng-show="panel === 'Antares'">
+			<p>Welcome to Antares</p>
+		    </div>
+		    <table class="striped" ng-show="panel === 'server'">
+			<thead>
+			    <tr>
+				<th>
+				    <a href="#!" ng-click="sortType = 'alias'; reverse = !reverse">Alias
+					<i ng-show="sortType === 'alias' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'alias' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'public_ip'; reverse = !reverse">Public IP
+					<i ng-show="sortType === 'public_ip' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'public_ip' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'private_ip'; reverse = !reverse">Private IP
+					<i ng-show="sortType === 'private_ip' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'private_ip' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+
+				</th>
+				<th>
+
+				</th>				
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr ng-repeat="x in srv = (servers| filter:search | orderBy:sortType:reverse ) | limitTo:numPerPage:numPerPage*(pagesrv-1)">
+				<td>
+				    {a x.alias a}
+				</td>
+				<td>
+				    {a x.public_ip a}
+				</td>
+				<td>
+				    {a x.private_ip a}
+				</td>
+				<td>
+				    <img ng-click="spekeditor(x._id.$oid)" src="{{ url_for('static', filename = 'img/Control-Panel-icon.png')}}"/>
+				</td>
+
+			    </tr>
+			    <!--tr>
+				<td>
+				    number of row: {a searchresult.length a}
+				</td>
+			    </tr-->
+			</tbody>
+
+
+
+		    </table>
+		    <table class="striped" ng-show="panel === 'database'">
+			<thead>
+			    <tr>
+
+				<th>
+				    <a href="#!" ng-click="sortType = 'db_name'; reverse = !reverse">Name
+					<i ng-show="sortType === 'db_name' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'db_name' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'db_user'; reverse = !reverse">User
+					<i ng-show="sortType === 'db_user' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'db_user' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'db_pass'; reverse = !reverse">Password
+					<i ng-show="sortType === 'db_pass' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'db_pass' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'db_host'; reverse = !reverse">Host
+					<i ng-show="sortType === 'db_host' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'db_host' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr ng-repeat="x in db = (databases| filter:search | orderBy:sortType:reverse ) | limitTo:numPerPage:numPerPage*(pagedb-1)">
+
+				<td>
+				    {a x.db_name a}
+				</td>
+				<td>
+				    {a x.db_user a}
+				</td>
+				<td>
+				    {a x.db_pass a}
+				</td>
+				<td>
+				    {a x.db_host a}
+				</td>
+<!--				<td style="padding: 0px 15px 0px 15px">
+				    <i ng-click="deletedatabase( x._id.$oid )" class="material-icons ired small" style="cursor: pointer;">delete</i>
+				</td>-->
+			    </tr>
+			</tbody>
+
+
+
+		    </table>
+		    <table class="striped" ng-show="panel === 'application'">
+			<thead>
+			    <tr>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_name'; reverse = !reverse">Name
+					<i ng-show="sortType === 'app_name' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_name' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_domain'; reverse = !reverse">Domain
+					<i ng-show="sortType === 'app_domain' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_domain' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_dir'; reverse = !reverse">Directory
+					<i ng-show="sortType === 'app_dir' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_dir' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_repo'; reverse = !reverse">Repository
+					<i ng-show="sortType === 'app_repo' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_repo' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_env'; reverse = !reverse">Branch
+					<i ng-show="sortType === 'app_env' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_env' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+				<th>
+				    <a href="#!" ng-click="sortType = 'app_host'; reverse = !reverse">Host
+					<i ng-show="sortType === 'app_host' && reverse === false" class="material-icons " style="float: right">arrow_drop_down</i>
+					<i ng-show="sortType === 'app_host' && reverse === true" class="material-icons " style="float: right">arrow_drop_up</i>
+				    </a>
+				</th>
+
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr ng-repeat="x in app = (applications| filter:search | orderBy:sortType:reverse) | limitTo:numPerPage:numPerPage*(pageapp-1)">
+<!--				<td ondblclick="$(this).children().addClass('hide'); $(this).children().next().removeClass('hide');">
+				    <span>{a x.app_name a}</span>
+				    <input ng-keyup="$event.keyCode == 13 && editdata($event)" class="hide" type="text" value="{a x.app_name a}">
+				</td>-->
+<td>
+    {a x.app_name a}
+</td>
+				<td  
+				    ondblclick="if ($(this).children(':first').css('height') == '22px'){
+					$(this).children(':first').css('height', 'initial'); 
+					
+					$(this).children(':first').children(':first').removeClass('hide')
+					$(this).children(':first').children(':gt(0)').children().removeClass('hide')
+				    } 
+				    else{
+					$(this).children(':first').css('height', '22px'); 
+					
+					$(this).children(':first').children(':first').addClass('hide')
+					$(this).children(':first').children(':gt(0)').children().addClass('hide')
+				    }"
+				    >
+				    <div style="height:22px;overflow: hidden;">
+					<div class="hide">
+					    <input pattern='^\S+$' type="text" style="width:100px">
+					     
+					<select name="domain" class="browser-default" style="display:inline-block;width: auto">
+					    <option ng-repeat="x in domains| orderBy:'toString()'" value="{a x a}">{a x a}</option>
+					</select>
+				    
+					    
+					<i ng-click="adddomain($event,x._id.$oid)" class="material-icons right" style="cursor:pointer">add</i>
+					    
+					    </div>
+					<div ng-repeat="y in x.app_domain| orderBy" style="position:relative">
+					    {a y a} 
+
+					    <i ng-click="deletedomain(y,x._id.$oid)" style="position:absolute;right: 0px;cursor:pointer" class="hide material-icons" >remove</i>
+<!--					    <br>-->
+					</div>
+				    </div>
+				</td>
+<!--				<td ng-if="x.app_domain.length <= 1">
+
+				    {a x.app_domain[0] a}
+
+				</td>-->
+				<td>
+				    {a x.app_dir a}
+				</td>
+				<td>
+				    {a x.app_repo a}
+				</td>
+				<td>
+				    {a x.app_env a}
+				</td>
+				<td>
+				    {a x.app_host a}
+				</td>
+
+			    </tr>
+			    <!--tr>
+				<td>
+				    number of row: {a searchresult.length a}
+				</td>
+			    </tr-->
+			</tbody>
+
+
+
+		    </table>
+		</div>
+
+		<uib-pagination ng-show="panel === 'application'"
+				style="display:inline;"
+				class="pagination-sm pagination" 
+				total-items="app.length" 
+				ng-model="pageapp"
+				previous-text="&lsaquo;" 
+				next-text="&rsaquo;" 
+				items-per-page=numPerPage>
+		</uib-pagination>
+
+		<uib-pagination ng-show="panel === 'database'"
+				style="display:inline"
+				class="pagination-sm pagination" 
+				total-items="db.length" 
+				ng-model="pagedb"
+				previous-text="&lsaquo;" 
+				next-text="&rsaquo;" 
+				items-per-page=numPerPage>
+		</uib-pagination>
+
+		<uib-pagination ng-show="panel === 'server'"
+				style="display:inline"
+				class="pagination-sm pagination" 
+				total-items="srv.length" 
+				ng-model="page"
+				previous-text="&lsaquo;" 
+				next-text="&rsaquo;" 
+				items-per-page=numPerPage>
+		</uib-pagination>
+		<a 
+		    ng-hide="panel === 'Antares'" 
+		    class="btn-floating right btn-large waves-effect waves-light red modal-trigger" 
+		    href="#add{a panel a}" style="margin-top:-10px">
+		    <i class="material-icons">add</i>
+		</a>
+	    </div>
+	    <div id="addserver" class="modal">
+		<div class="modal-content">
+		    <h5>ADD SERVER</h5>
+
+		    <form id="addserverform" class="col s12">
+			<div class="row">
+			    <div class="input-field col s6">
+				<input placeholder="Space not allowed" type="text" class="validate"
+				       pattern='^\S+$'>
+				<label>Alias</label>
+			    </div>
+			    <div class="input-field col s6">
+				<input placeholder="[0-255].[0-255].[0-255].[0-255]" type="text" class="validate"
+				       pattern='^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'>
+				<label>Public IP</label>
+			    </div>
+
+			</div>
+			<div class="row">
+			    <div class="input-field col s6">
+				<input placeholder="[0-255].[0-255].[0-255].[0-255]" type="text" class="validate"
+				       pattern='^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'>
+				<label>Private IP</label>
+			    </div>
+			    <div class="input-field col s6">
+				<input type="text" class="validate">
+				<label>Server's Root Password</label>
+			    </div>
+
+			</div>
+		    </form>
+		</div>
+		<div class="modal-footer">
+		    <input type="submit" value="ADD" form="addserverform" class="waves-effect waves-green btn-flat">
+		</div>
+	    </div>
+	    <div id="adddatabase" class="modal">
+		<div class="modal-content">
+		    <h5>ADD DATABASE & DATABASE ACCOUNT</h5>
+		    <form id="adddatabaseform" action="/adddatabase" method="post" class="col s12">
+			<div class="row">
+			    <div class="input-field col m6 s12">
+				<input name="db_name" placeholder="Space not allowed" type="text" class="validate"
+				       pattern='^\S+$' required>
+				<label>Database</label>
+			    </div>
+			    <div class="input-field col m6 s12">
+				<input name="db_user" placeholder="Space not allowed" type="text" class="validate"
+				       pattern='^\S+$' required>
+				<label>User</label>
+			    </div>
+			</div>
+			<div class="row">
+			
+			    
+				    <div class="input-field col m4 s8">
+				<input name="db_pass" placeholder="Space not allowed" type="text" class="validate"
+				       pattern='^\S+$' required>
+				<label>Password</label>
+				</div>
+			    <div class="col m4 s4" style="margin-top:20px">
+				<a href="#!" onclick="randompass()" class="btn waves-effect waves-light" >Random
+    <i class="material-icons right">schedule</i>
+  </a>
+				</div>
+			    
+			    <div class="input-field col m4 s12">
+					<select name="db_host" class="browser-default" >
+					    <option ng-repeat="x in servers" value="{a x.alias a}">{a x.alias a}</option>
+					</select>
+				    </div>
+			</div>
+
+		    </form>
+		</div>
+		<div class="modal-footer">
+		    <button ng-click="adddatabase()"  class=" waves-effect waves-green btn-flat">ADD</button>
+		</div>
+	    </div>
+	    <div id="addapplication" class="modal">
+		<div class="modal-content">
+		    <h5>ADD NEW DEPLOY</h5>
+		    <form id="addapplicationform" action="/addapplication" method="post" class="col s12">
+			<div class="row">
+			    <div class="input-field col m6 s12">
+				<input name="app_name" placeholder="Space not allowed" type="text" class="validate"
+				       pattern='^\S+$' required>
+				<label>Name</label>
+			    </div>
+			    <div class="col m6 s12">
+				<div class="row">
+				    <div class="input-field  col s6">
+					<input name="subdomain" placeholder="Space not allowed" type="text" class="validate"
+					       pattern='^\S+$' maxlength="20" required>
+					<label>Subdomain</label>
+
+				    </div>
+				    <div class="input-field col s6">
+					<select name="domain" class="browser-default">
+					    <option ng-repeat="x in domains| orderBy:'toString()'" value="{a x a}">{a x a}</option>
+					</select>
+				    </div>
+				</div>
+
+
+			    </div>
+			    <div class="input-field col m6 s12">
+				<input name="app_repo" placeholder="git@gitlab.com:project/application.git" type="text" class="validate"
+				       pattern='^[^@]+@[^:]+:[^/]+/[^.]+\.git$' required>
+				<label>Repository</label>
+			    </div>
+			    <div class="col m6 s12">
+				<div class="row">
+				    <div class="input-field  col s6">
+					<input name="app_env" placeholder="Space not allowed" type="text" class="validate"
+					       pattern='^\S+$' maxlength="20" required>
+					<label>Branch</label>
+
+				    </div>
+				    <div class="input-field col s6">
+					<select name="app_host" class="browser-default" >
+					    <option ng-repeat="x in servers" value="{a x.alias a}">{a x.alias a}</option>
+					</select>
+				    </div>
+				</div>
+
+
+			    </div>
+
+
+			</div>
+
+		    </form>
+		</div>
+		<div class="modal-footer">
+		    <button ng-click="addapplication(1); showmodal();"  class="waves-effect waves-green btn-flat">ADD</button>
+		</div>
+	    </div>
+	    <div id="loading" class="modal white-text black" >
+		<div id="loadings" class="modal-content">
+
+		</div>
+		<div id="finish" class="hide modal-footer black black-text">
+		    <button  class="button" onclick="myclos()">CLOSE</button>
+		</div>
+	    </div>
+	</main>
+	<script type="text/javascript" charset="utf-8">
+
+	</script>
+	<script>
+	    function myclos(){
+	    document.getElementById('loadings').innerHTML = "";
+	    $('#finish').addClass('hide');
+	    $('#loading').closeModal();
+//	    angular.element(document.getElementById('body')).scope().application();
+	    }
+	    $(".button-collapses").sideNav();
+	    $('.modal-trigger').leanModal();
+	    $('select').material_select();
+	    function ConvertFormToJSON(form){
+	    var array = $(form).serializeArray();
+	    var json = {};
+	    jQuery.each(array, function() {
+	    json[this.name] = this.value || '';
+	    });
+	    return json;
+	    }
+	    function randompass(){
+		$('input[name="db_pass"]').val(makepass());
+	    }
+	    function makepass()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 16; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+	</script>
+	<script>
+	    var app = angular.module('myApp', ['ui.bootstrap']);
+	    // angular tags
+	    app.config(['$interpolateProvider', function ($interpolateProvider) {
+	    $interpolateProvider.startSymbol('{a');
+	    $interpolateProvider.endSymbol('a}');
+	    }]);
+	
+	//angular controller
+	    app.controller('bodyCtrl', function ($scope, $http) {
+		
+	    $scope.requesterr = 0
+	    $scope.pageapp = 1;
+	    $scope.pagedb = 1;
+	    $scope.pagesrv = 1;
+	    $scope.numPerPage = (($(document).height() - 208) - (($(document).height() - 208) % 52)) / 52;
+	    $("#tablefix").css("min-height", (52 * $scope.numPerPage) + 55);
+	    
+	    $http.get("/datauser")
+		    .then(function (response) {
+		    data = response.data;
+		    $scope.username = data.username;
+		    $scope.email = data.email;
+		    });
+		    
+	    ($scope.server = function () {
+	    $http.get("/server1")
+		    .then(function (response) {
+		    $scope.servers = response.data;
+		    });
+	    })();
+	    
+	    ($scope.database = function () {
+	    $http.get("/database1")
+		    .then(function (response) {
+		    $scope.databases = response.data;
+		    });
+	    })();
+	    
+	    ($scope.application = function () {
+	    $http.get("/application1")
+		    .then(function (response) {
+		    $scope.applications = response.data;
+		    });
+	    })();
+	    
+	    $scope.savesearch = function(){
+	    eval("$scope." + $scope.panel + "search = '" + $scope.search + "'");
+	    };
+	    
+	    $scope.retrivesearch = function(panel){
+	    eval("panel = $scope." + panel + "search");
+	    if (panel !== undefined) {
+	    $scope.search = panel;
+	    } else {
+	    $scope.search = "";
+	    }
+	    }
+	    
+	    $scope.editdata = function(event){
+	    //console.log(event.target);
+	    $(event.target).addClass('hide');
+	    $(event.target).prev().removeClass('hide');
+	    }
+	    
+	    // spek editor
+	    $scope.spekeditor = function(idserver){
+	    var left = (screen.width / 2) - (500 / 2);
+	    var top = (screen.height / 2) - (400 / 2);
+	    eval ("widow" + idserver + " = window.open('/spekeditor/'+idserver,''+idserver, 'width=500, height=400,top='+top+', left='+left)");
+	    }
+	    
+	    
+	    $scope.domain = (function () {
+	    $http.get("/domain")
+		    .then(function (response) {
+		    $scope.domains = response.data;
+		    });
+	    })();
+	    
+	    
+	    
+	    
+	    $scope.showmodal = function () {
+	    $('#loading').openModal({
+	    dismissible: false
+	    });
+	    }
+	    
+	    $scope.addappfinish = 0;
+	    
+	    $scope.addapplication = function (finish = 0) {
+		
+	    //ambil form
+	    var post = ConvertFormToJSON($('#addapplicationform'));
+	    post['finish'] = finish;
+	    
+	    $http({
+	    method : "POST",
+		    data: post,
+		    url : "/addapplication"
+	    }).then(function mySucces(response) {
+	    // chek if app are registered
+	    if (response.data.registered != undefined){
+		document.getElementById('loadings').innerHTML += response.data.registered;
+		$('#finish').removeClass('hide');
+		$("#loading").scrollTop($("#loading")[0].scrollHeight);
+		return 0;
+	    }
+//	    console.log(response.data);
+	    $scope.addappfinish = response.data.addappfinish;
+	    line = response.data.console;
+	    var patt = /^\[\d/;
+	    if (patt.test(line)){
+	    document.getElementById('loadings').innerHTML += ("<br>" + line);
+	    }
+	    else{
+	    document.getElementById('loadings').innerHTML += line;
+	    }
+	    
+	    $("#loading").scrollTop($("#loading")[0].scrollHeight);
+	    
+	    if ($scope.addappfinish == 0){
+	    $scope.addapplication($scope.addappfinish);
+	    }
+	    else{
+	    //munculkan close
+	    $('#finish').removeClass('hide');
+	    $("#loading").scrollTop($("#loading")[0].scrollHeight);
+	    }
+	    
+	    }, function myError(response) {
+//		if(response.status == -1){
+		    $scope.requesterr += 1;
+		    if ($scope.requesterr == 100){
+			$scope.requesterr = 0;
+			return 0;
+		    }
+		    $scope.addappfinish = 0;
+		    $scope.addapplication($scope.addappfinish);
+		    
+//		}
+		
+	    //response error
+//		else{
+//		    console.log("internal server error");
+//		    return 0;
+//		}
+	    
+	    });
+	    }
+	    
+	    $scope.adddatabase = function(){
+		var post = ConvertFormToJSON($('#adddatabaseform'));
+		$http({
+	    method : "POST",
+		    data: post,
+		    url : "/adddatabase"
+	    }).then(function mySucces(response) {
+		$scope.showmodal();
+	    document.getElementById('loadings').innerHTML += response.data.registered;
+		$('#finish').removeClass('hide');
+		$scope.database();
+	    }, function myError(response) {
+	    console.log('error');
+	    });
+		
+	    }
+	    
+	    $scope.deletedatabase = function(oid){
+		$http({
+	    method : "POST",
+		    data: {'oid':oid},
+		    url : "/deletedatabase"
+	    }).then(function mySucces(response) {
+		console.log(response.data);
+
+	    }, function myError(response) {
+	    console.log('error');
+	    });
+		
+	    }
+	    
+	    $scope.adddomain = function(obj,id){
+		var subdomain = $(obj.target).prev().prev().val();
+		var topdomain = $(obj.target).prev().val();
+		app_domain = subdomain + '.' + topdomain
+		var id = id
+		console.log(subdomain, topdomain, id);
+		$http({
+	    method : "POST",
+		    data: {'app_domain':app_domain,'app_id':id},
+		    url : "/adddomain"
+	    }).then(function mySucces(response) {
+		if(response.data.status == 200){
+		    console.log(response.data.result);
+		    $scope.application();
+		}
+		else{
+		    console.log(response.data.result);
+		}
+
+	    }, function myError(response) {
+	    console.log('error');
+	    });
+		
+	    }
+	    
+	    $scope.deletedomain = function(app_domain,id){
+		$http({
+	    method : "POST",
+		    data: {'app_domain':app_domain,'app_id':id},
+		    url : "/deletedomain"
+	    }).then(function mySucces(response) {
+		if(response.data.status == 200){
+		    console.log(response.data.result);
+		    $scope.application();
+		}
+		else{
+		    console.log(response.data.result);
+		}
+
+	    }, function myError(response) {
+	    console.log('error');
+	    });
+		
+	    }
+	    
+	    });
+	</script>
+
+    </body>
+</html>

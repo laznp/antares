@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Antares</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+        <style>
+            .col-centered{
+                float: none;
+                margin: 0 auto;
+            }
+            .vertical-center {
+                min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+                min-height: 100vh; /* These two lines are counted as one :-)       */
+
+                display: flex;
+                align-items: center;
+            }
+            input:focus,
+            select:focus,
+            textarea:focus,
+            button:focus {
+                outline: none;
+            }
+            body{
+                background-image: url("{{ url_for('static', filename='img/diagmonds.png') }}");
+                background-repeat: repeat;
+            }
+            input{
+                background: transparent;
+                color:white;
+            }
+            label{
+                color:maroon;
+            }
+            @-webkit-keyframes autofill {
+                to {
+                    color: #fff;
+                    background: transparent;
+                }
+            }
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus,
+            select:-webkit-autofill,
+            select:-webkit-autofill:hover,
+            select:-webkit-autofill:focus {
+                -webkit-animation-name: autofill;
+                -webkit-animation-fill-mode: both;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="w3-container">
+            <div class="w3-row vertical-center">
+                <div class="w3-col col-centered w3-card-4 " style="width:300px;padding: 20px;background-color:#504c4c">
+                    <form class="w3-card-3 " action="/login1" method="post">
+                        <p style="text-align:center">
+                            <img height="200px" src="{{ url_for('static', filename='img/logo_antares.png') }}">
+                        </p>
+
+                        <p style="text-align:center;color: maroon">
+                            <b> - Antares - </b>
+                        </p>
+
+                        <p style="text-align:center;color: maroon">
+                            <b>SysAd Killer Application</b>
+                        </p>
+
+                        <p>
+                            <label class="w3-text"><b>Username</b></label>
+                            <input class="w3-input" name="username" type="text" style="border-bottom-color: maroon;" ></p>
+
+                        <p>
+                            <label class="w3-text"><b>Password</b></label>
+                            <input class="w3-input" name="password" type="password" style="border-bottom-color: maroon;" ></p>
+
+                        <p>
+                            <button class="w3-btn" style="background-color:maroon">Login <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button></p>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

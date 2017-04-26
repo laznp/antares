@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+{% block content%}
+<div class="card-panel" id="server-card">
+	<center>
+		<span id="logo">Database List</span>
+	</center>
+	<table class="bordered centered">
+		<thead>
+			<tr>
+				<th data-field="dbhost">Host</th>
+				<th data-field="dbname">Name</th>
+				<th data-field="dbuser">User</th>
+				<th data-field="dbpass">Password</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for db in data %}
+				<tr>
+					<td>{{ db.db_host }}</td>
+					<td>{{ db.db_name }}</td>
+					<td>{{ db.db_user }}</td>
+					<td>{{ db.db_pass }}</td>
+				</tr>
+			{% endfor%}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

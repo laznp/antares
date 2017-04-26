@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+{% block content%}
+
+{% if data.action == "add" %}
+	<div class="card-panel" id="server-card">
+		<center>
+			<span id="logo">Add Subdomain</span>
+		</center>
+		<form class="s12 antares-form" action="/add-domain-process" method="post" autocomplete="off">
+			<div class="row">
+				<div class="input-field col s12">
+					<select class="antares-form antares-select" name="domtarget">
+						{% if data.domains != "" %}
+							<option value="" disabled selected></option>
+							{% for domain in data.domains %}
+								<option value="{{ domain.dom_id }}">{{ domain.dom_name }}</option>
+							{% endfor %}
+						{% endif %}
+					</select>
+					<label class="antares-form">Domain Target</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<select class="antares-form antares-select" name="domhost">
+						{% if data.server != "" %}
+							<option value="" disabled selected></option>
+							{% for server in data.server %}
+								<option value="{{ server.public_ip }}">{{ server.alias }} / {{ server.private_ip }} / {{ server.public_ip }}</option>
+							{% endfor %}
+						{% endif %}
+					</select>
+					<label class="antares-form">Domain Host</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="server" type="text" class="validate white-text antares-form" name="domname">
+					<label for="priv-ip" class="antares-form">Subdomain Name</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center-align">
+					<button class="btn waves-effect waves-light" type="submit" name="action" id="antares-form-btn">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+	</script>
+{% endif%}
+{% endblock %}

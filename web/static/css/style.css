@@ -1,0 +1,165 @@
+#message {
+	font-family: "Trebuchet MS", Ubuntu, sans-serif;
+	font-size: 18px;
+	color: #d7252c;
+}
+img {
+	margin-top: 150px;
+}
+
+body {
+	background-image: url("../img/diagmonds.png");
+	background-repeat: repeat;
+	font-family: "Trebuchet MS";
+}
+#srv-name {
+	font-size: 60px;
+}
+
+#err-code {
+	font-size: 60px;
+}
+
+#git-status {
+	font-size: 20px;
+}
+
+a{
+	color: #d7252c;
+	text-decoration: none;
+}
+
+label.login-form {
+	color: #d7252c!important;
+}
+
+input[type=text]:focus.login-form, input[type=password]:focus.login-form,  {
+	color: #d7252c!important;
+	border-bottom: 1px solid #d7252c!important;
+	box-shadow: 0 1px 0 0 #d7252c!important;
+
+}
+
+input[type=text].login-form, input[type=password].login-form {
+	color: #d7252c!important;
+	border-bottom: 1px solid #d7252c!important;
+	box-shadow: 0 1px 0 0 #d7252c!important;
+}
+
+input[type=text].valid, input[type=password].valid {
+	color: #fff!important;
+}
+
+.prefix, #text-logo {
+	color: #d7252c!important;
+}
+
+#login-btn {
+	background-color: #d7252c!important;
+}
+
+#img-logo {
+	width: 125px;
+	height: auto;
+	margin-top: 0;
+	margin-bottom: 30px;
+}
+
+#text-logo {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+#card-bg {
+	position: relative;
+	left: 33%;
+	margin-top:15px!important;
+}
+
+.side-nav.fixed {
+	width: 250px;
+	background-color: rgba(0,0,0,0.3);
+}
+
+.side-nav a:hover {
+    background-color: rgba(0,0,0,0.7)!important;
+}
+
+#server-card {
+	margin-left: 100px;
+	margin-top: 50px;
+	background-color: rgba(0,0,0,0.3);
+	color:white;
+	width: 100%!important;
+}
+
+tbody {
+	font-size: 12px;
+}
+tbody, thead {
+	color: white;
+}
+
+.action-btn i {
+	color: #000!important;
+	background-color: #fff!important;
+}
+
+.action-btn {
+	background-color: #fff!important;
+	color: #000!important;
+}
+
+#action-btn-add {
+	position: relative!important;
+	top:10px;
+}
+
+#logo {
+	font-size: 40px;
+}
+
+#antares-modal {
+	background-color: rgba(0,0,0,1);
+	max-height: 80%!important;
+}
+
+/* Add Server */
+label.antares-form {
+	color: #fff!important;
+	font-size: 12px!important;
+}
+
+input[type=text]:focus.antares-form, input[type=password]:focus.antares-form {
+	color: #fff!important;
+	border-bottom: 1px solid #fff!important;
+	box-shadow: 0 1px 0 0 #fff!important;
+	font-size: 12px!important;
+
+}
+
+input[type=text].valid.antares-form, input[type=password].valid.antares-form {
+	border-bottom: 1px solid #fff!important;
+	box-shadow: 0 1px 0 0 #fff!important;
+}
+
+#antares-form-btn {
+	color: #000!important;
+	background-color: #fff!important;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.antares-select .dropdown-content {
+	background-color: black!important;
+}
+
+.antares-select .dropdown-content span {
+	color: white!important;
+}
+
+.antares-select .dropdown-content span:hover, .antares-select .dropdown-content li.active span {
+	color: black!important;
+}

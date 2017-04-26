@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block content%}
+<div class="card-panel" id="server-card">
+	<center>
+		<span id="logo">Application List</span>
+	</center>
+	<table class="bordered centered">
+		<thead>
+			<tr>
+				<th data-field="appname">Name</th>
+				<th data-field="appdomain">Domain</th>
+				<th data-field="apprepo">Repository</th>
+				<th data-field="apphost">Host</th>
+				<th data-field="appdir">Directory</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for app in data %}
+				<tr>
+					<td>{{ app.app_name }}</td>
+					<td>{{ app.app_domain }}</td>
+					<td>{{ app.app_repo }}</td>
+					<td>{{ app.app_host }}</td>
+					<td>{{ app.app_dir }}</td>
+				</tr>
+			{% endfor%}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

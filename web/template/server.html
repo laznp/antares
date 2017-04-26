@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+{% block content%}
+<div class="card-panel" id="server-card">
+	<center>
+		<span id="logo">Server List</span>
+	</center>
+	<table class="bordered centered">
+		<thead>
+			<tr>
+				<th data-field="pub-ip">Public IP</th>
+				<th data-field="priv-ip">Private IP</th>
+				<th data-field="alias">Alias</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for server in data %}
+				<tr>
+					<td>{{ server.public_ip }}</td>
+					<td>{{ server.private_ip }}</td>
+					<td>{{ server.alias }}</td>
+				</tr>
+			{% endfor%}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,51 @@
+<html>
+	<head>
+	<title>PT. Inzpire Technology</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div style="width:300px" id="card-bg">
+					<div class="card-panel grey darken-4" id="login-card">
+						<div class="center-align">
+							<img src="{{ url_for('static', filename='img/inzpire_big2.png') }}" id="img-logo">
+						</div>
+						<div class="center-align" id="text-logo">
+							<b>- Antares Login -</b>
+						</div>
+						<form class="s12" action="/login-process" method="post" autocomplete="off">
+							<div class="row">
+								<div class="input-field col s12 ">
+									<i class="material-icons prefix">account_circle</i>
+									<input id="username" type="text" class="validate red-text login-form" name="uname">
+									<label for="username" class="login-form">Username</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12 ">
+									<i class="material-icons prefix">vpn_key</i>
+									<input id="password" type="password" class="validate red-text login-form" name="upass">
+									<label for="password" class="login-form">Password</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12 center-align">
+									<button class="btn waves-effect waves-light login-form" type="submit" name="action" id="login-btn">Login
+    									<i class="material-icons right">send</i>
+  									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
